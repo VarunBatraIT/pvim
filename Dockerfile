@@ -16,7 +16,8 @@ RUN apk --no-cache add php-openssl php-json php-phar php-mbstring php-iconv php-
 RUN php -r "copy('https://getcomposer.org/download/1.8.4/composer.phar', 'composer-setup.php');" \
     && php -r "if (hash_file('sha256', 'composer-setup.php') === '1722826c8fbeaf2d6cdd31c9c9af38694d6383a0f2bf476fe6bbd30939de058a') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
     && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');"
+    && php -r "unlink('composer-setup.php');" \
+    && mv composer.phar /usr/local/bin/composer
 
 RUN rm -rf \
     /var/cache/* \
