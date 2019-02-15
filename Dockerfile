@@ -13,11 +13,10 @@ RUN cd $UHOME/ && wget "https://github.com/shawncplus/phpcomplete.vim/raw/master
 
 RUN apk --no-cache add php-openssl php-json php-phar php-mbstring php-iconv php-session php-pdo php-pcntl php-tokenizer
 
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php -r "if (hash_file('SHA384', 'composer-setup.php') === '93b54496392c062774670ac18b134c3b3a95e5a5e5c8f1a9f115f203b75bf9a129d5daa8ba6a13e2cc8a1da0806388a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
+RUN php -r "copy('https://getcomposer.org/download/1.8.4/composer.phar', 'composer-setup.php');" \
+    && php -r "if (hash_file('sha256', 'composer-setup.php') === '1722826c8fbeaf2d6cdd31c9c9af38694d6383a0f2bf476fe6bbd30939de058a') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
     && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');" \
-    && mv composer.phar /usr/local/bin/composer
+    && php -r "unlink('composer-setup.php');"
 
 RUN rm -rf \
     /var/cache/* \
